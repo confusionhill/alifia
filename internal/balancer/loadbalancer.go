@@ -35,9 +35,7 @@ func (lb *LoadBalancer) getNextAvailableServer() Server {
 }
 
 func (lb *LoadBalancer) ServeProxy(rw http.ResponseWriter, req *http.Request) {
-	targetServer := lb.getNextAvailableServer()
-
-	// could optionally log stuff about the request here!
+	targetServer := lb.servers[0] //lb.getNextAvailableServer()
 	fmt.Printf("forwarding request to address %q\n", targetServer.Address())
 
 	// could delete pre-existing X-Forwarded-For header to prevent IP spoofing

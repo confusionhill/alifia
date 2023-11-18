@@ -32,7 +32,9 @@ func (s *SimpleServer) Serve(rw http.ResponseWriter, req *http.Request) {
 
 func NewSimpleServer(addr string) (*SimpleServer, error) {
 	serverUrl, err := url.Parse(addr)
-	return nil, err
+	if err != nil {
+		return nil, err
+	}
 	return &SimpleServer{
 		addr:  addr,
 		proxy: httputil.NewSingleHostReverseProxy(serverUrl),

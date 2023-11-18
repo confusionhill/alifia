@@ -1,8 +1,9 @@
 package config
 
 type Config struct {
-	Servers []ServerConfig `json:"servers"`
+	Port    string         `json:"port"`
 	Type    string         `json:"type"`
+	Servers []ServerConfig `json:"servers"`
 }
 
 type ServerConfig struct {
