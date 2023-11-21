@@ -1,22 +1,28 @@
 package balancer
 
 import (
+	"database/sql"
 	"fmt"
 	"net/http"
 )
 
 type LoadBalancer struct {
+	db              *sql.DB
 	port            string
 	roundRobinCount int
 	servers         []Server
 }
 
-func NewLoadBalancer(port string, servers []Server) *LoadBalancer {
+func NewLoadBalancer(db *sql.DB, port string, servers []Server) *LoadBalancer {
 	return &LoadBalancer{
 		port:            port,
 		roundRobinCount: 0,
 		servers:         servers,
 	}
+}
+
+func (lb *LoadBalancer) ChangeServers(servers []Server) {
+	lb.servers = servers
 }
 
 func (lb *LoadBalancer) GetPort() string {

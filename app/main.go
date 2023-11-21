@@ -8,15 +8,20 @@ import (
 )
 
 func main() {
+	rsc, err := loadResources()
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
 	serve, err := balancer.NewSimpleServer("https://be-staging-b6utdt2kwa-et.a.run.app")
 	if err != nil {
-		fmt.Println(err.Error())
 		log.Fatal(err)
+		return
 	}
 	servers := []balancer.Server{
 		serve,
 	}
-	lb := balancer.NewLoadBalancer("8000", servers)
+	lb := balancer.NewLoadBalancer(rsc.db, "8000", servers)
 	if lb == nil {
 		fmt.Println("kok nil sih bgst!")
 	}
